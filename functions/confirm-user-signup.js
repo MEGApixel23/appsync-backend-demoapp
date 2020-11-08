@@ -11,15 +11,16 @@ module.exports.handler = async (event) => {
     const suffix = chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true });
     const screenName = `${name.replace(/[^a-zA-Z0-9]/g, '')}${suffix}`;
     const user = {
-      id: event.username,
+      id: event.userName,
       name,
       screenName,
-      createdAt: new Date(),
+      createdAt: new Date().toISOString(),
       followersCount: 0,
       followingCount: 0,
       tweetsCount: 0,
       likesCount: 0,
     };
+
     await DocumentClient.put({
       TableName: USERS_TABLE,
       Item: user,

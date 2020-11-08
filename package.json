@@ -5,15 +5,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "sls": "sls"
+    "test:integration": "cross-env AWS_PROFILE=aws_course_user jest --verbose ./__tests__/test_cases/integration"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^26.0.15",
     "aws-sdk": "^2.783.0",
+    "cross-env": "^7.0.2",
+    "dotenv": "^8.2.0",
+    "jest": "^26.6.3",
     "serverless": "2.4.0",
     "serverless-appsync-plugin": "^1.4.0",
+    "serverless-export-env": "^1.4.0",
     "serverless-iam-roles-per-function": "^2.0.2"
   },
   "dependencies": {

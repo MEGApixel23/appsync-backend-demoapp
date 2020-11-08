@@ -13,6 +13,7 @@ provider:
 plugins:
   - serverless-appsync-plugin
   - serverless-iam-roles-per-function
+  - serverless-export-env
 
 package:
   exclude:
@@ -20,6 +21,7 @@ package:
     - package.json
 
 custom:
+  region: ${opt:region, self:provider.region}
   stage: ${opt:stage, self:provider.stage}
   appSync:
     - ${file(serverless.appsync-api.yml)}
@@ -28,7 +30,7 @@ functions:
   confirmUserSignup:
     handler: function/confirm-user-sognup.handler
     environment:
-      USER_TABLE: !Ref UsersTable
+      USERS_TABLE: !Ref UsersTable
     iamRoleStatements:
       - Effect: Allow
         Action: dynamodb:PutItem
@@ -94,5 +96,7 @@ resources:
         PreventUserExistenceErrors: ENABLED
 
   Outputs:
+    AWSRegion:
+      Value: ${self:custom.region}
     CognitoUserPoolId:
       Value: !Ref CognitoUserPool
