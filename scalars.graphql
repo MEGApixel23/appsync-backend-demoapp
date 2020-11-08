@@ -1,0 +1,4 @@
+scalar AWSTimestamp
+scalar AWSURL
+scalar AWSDate
+scalar AWSDateTime
