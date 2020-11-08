@@ -3,9 +3,11 @@
   "private": false,
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "test:integration": "cross-env AWS_PROFILE=aws_course_user jest --verbose ./__tests__/test_cases/integration"
+    "deploy": "cross-env AWS_PROFILE=aws_course_user sls deploy",
+    "test:integration": "cross-env AWS_PROFILE=aws_course_user jest --verbose ./__tests__/test_cases/integration",
+    "test:e2e": "cross-env AWS_PROFILE=aws_course_user jest --verbose ./__tests__/test_cases/e2e",
+    "export-env": "cross-env AWS_PROFILE=aws_course_user sls export-env"
   },
   "keywords": [],
   "author": "",

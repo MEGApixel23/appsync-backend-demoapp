@@ -28,7 +28,7 @@ custom:
 
 functions:
   confirmUserSignup:
-    handler: function/confirm-user-sognup.handler
+    handler: functions/confirm-user-signup.handler
     environment:
       USERS_TABLE: !Ref UsersTable
     iamRoleStatements:
@@ -84,7 +84,7 @@ resources:
         Principal: cognito-idp.amazonaws.com
         SourceArn: !GetAtt CognitoUserPool.Arn
 
-    WebUserPoolCliend:
+    WebUserPoolClient:
       Type: AWS::Cognito::UserPoolClient
       Properties:
         UserPoolId: !Ref CognitoUserPool
@@ -100,3 +100,5 @@ resources:
       Value: ${self:custom.region}
     CognitoUserPoolId:
       Value: !Ref CognitoUserPool
+    WebCognitoUserPoolCliendId:
+      Value: !Ref WebUserPoolClient
