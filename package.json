@@ -7,6 +7,7 @@
     "deploy": "cross-env AWS_PROFILE=aws_course_user sls deploy",
     "test:integration": "cross-env AWS_PROFILE=aws_course_user jest --verbose ./__tests__/test_cases/integration",
     "test:e2e": "cross-env AWS_PROFILE=aws_course_user jest --verbose ./__tests__/test_cases/e2e",
+    "test:unit": "cross-env AWS_PROFILE=aws_course_user jest --verbose ./__tests__/test_cases/unit",
     "export-env": "cross-env AWS_PROFILE=aws_course_user sls export-env"
   },
   "keywords": [],
@@ -14,6 +15,8 @@
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^26.0.15",
+    "amplify-appsync-simulator": "^1.23.9",
+    "amplify-velocity-template": "^1.3.4",
     "aws-sdk": "^2.783.0",
     "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
