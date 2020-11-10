@@ -1,8 +1,9 @@
 require('dotenv').config();
 const fs = require('fs');
 const AWS = require('aws-sdk');
-const velocityMapper = require('amplify-appsync-simulator/lib/velocity/value-mapper/mapper');
 const velocityTemplate = require('amplify-velocity-template');
+const velocityMapper = require('amplify-appsync-simulator/lib/velocity/value-mapper/mapper');
+const GraphQL = require('../lib/GraphQL');
 
 const we_invoke_confirmUserSignup = async (username, name, email) => {
   const handler = require('../../functions/confirm-user-signup').handler;
@@ -21,9 +22,9 @@ const we_invoke_confirmUserSignup = async (username, name, email) => {
         email_verified: 'false',
         name,
         email,
-      }
+      },
     },
-    response: {}
+    response: {},
   };
 
   await handler(event, context);
@@ -34,23 +35,25 @@ const a_user_signs_up = async (password, name, email) => {
   const userPoolId = process.env.COGNITO_USER_POOL_ID;
   const clientId = process.env.WEB_COGNITO_USER_POOL_CLIEND_ID;
 
-  const signUpResponse = await cognito.signUp({
-    ClientId: clientId,
-    Username: email,
-    Password: password,
-    UserAttributes: [
-      { Name: 'name', Value: name }
-    ]
-  }).promise();
+  const signUpResponse = await cognito
+    .signUp({
+      ClientId: clientId,
+      Username: email,
+      Password: password,
+      UserAttributes: [{ Name: 'name', Value: name }],
+    })
+    .promise();
 
   const username = signUpResponse.UserSub;
 
   console.debug(`[${email}] - user has signed up [${username}]`);
 
-  await cognito.adminConfirmSignUp({
-    UserPoolId: userPoolId,
-    Username: username,
-  }).promise();
+  await cognito
+    .adminConfirmSignUp({
+      UserPoolId: userPoolId,
+      Username: username,
+    })
+    .promise();
 
   console.debug(`[${email}] - confirmed sign up`);
 
@@ -72,8 +75,44 @@ const we_invoke_an_appsync_template = (templatePath, context) => {
   return JSON.parse(compiler.render(context));
 };
 
+const a_user_calls_getMyProfile = async (user) => {
+  const getMyProfileQuery = `
+    query getMyProfile {
+      getMyProfile {
+        backgroundImageUrl
+        bio
+        createdAt
+        followersCount
+        birthdate
+        followingCount
+        id
+        imageUrl
+        likesCount
+        location
+        name
+        screenName
+        tweetsCount
+        website
+      }
+    }
+  `;
+
+  const data = await GraphQL.request(
+    process.env.API_URL,
+    getMyProfileQuery,
+    {},
+    user.accessToken,
+  );
+  const profile = data.getMyProfile;
+
+  console.debug(`[${user.username}] - fetched a profile`);
+
+  return profile;
+};
+
 module.exports = {
   we_invoke_confirmUserSignup,
   a_user_signs_up,
   we_invoke_an_appsync_template,
+  a_user_calls_getMyProfile,
 };
