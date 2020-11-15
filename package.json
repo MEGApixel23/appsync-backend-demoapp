@@ -8,7 +8,7 @@
     "test:integration": "cross-env AWS_PROFILE=aws_course_user jest --verbose ./__tests__/test_cases/integration",
     "test:e2e": "cross-env AWS_PROFILE=aws_course_user jest --verbose ./__tests__/test_cases/e2e",
     "test:unit": "cross-env AWS_PROFILE=aws_course_user jest --verbose ./__tests__/test_cases/unit",
-    "export-env": "cross-env AWS_PROFILE=aws_course_user sls export-env"
+    "export-env": "cross-env AWS_PROFILE=aws_course_user sls export-env && cross-env AWS_PROFILE=aws_course_user sls manifest"
   },
   "keywords": [],
   "author": "",
@@ -27,7 +27,8 @@
     "serverless": "2.4.0",
     "serverless-appsync-plugin": "^1.4.0",
     "serverless-export-env": "^1.4.0",
-    "serverless-iam-roles-per-function": "^2.0.2"
+    "serverless-iam-roles-per-function": "^2.0.2",
+    "serverless-manifest-plugin": "^1.0.6"
   },
   "dependencies": {
     "chance": "^1.1.7"

@@ -7,3 +7,7 @@ jspm_packages
 
 .idea
 .env
+
+# Ignore serverless manifest files
+serverless.manifest.json
+.serverless/manifest.json
