@@ -110,9 +110,45 @@ const a_user_calls_getMyProfile = async (user) => {
   return profile;
 };
 
+const a_user_calls_editMyProfile = async (user, input) => {
+  const editMyProfileMutation = `
+    mutation editMyProfile($input: ProfileInput!) {
+      editMyProfile(newProfile: $input) {
+        backgroundImageUrl
+        bio
+        createdAt
+        followersCount
+        birthdate
+        followingCount
+        id
+        imageUrl
+        likesCount
+        location
+        name
+        screenName
+        tweetsCount
+        website
+      }
+    }
+  `;
+  const variables = { input };
+  const data = await GraphQL.request(
+    process.env.API_URL,
+    editMyProfileMutation,
+    variables,
+    user.accessToken,
+  );
+  const profile = data.editMyProfile;
+
+  console.debug(`[${user.username}] - edited a profile`);
+
+  return profile;
+};
+
 module.exports = {
   we_invoke_confirmUserSignup,
   a_user_signs_up,
   we_invoke_an_appsync_template,
   a_user_calls_getMyProfile,
+  a_user_calls_editMyProfile,
 };
