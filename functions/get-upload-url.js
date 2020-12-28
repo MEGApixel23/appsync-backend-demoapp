@@ -5,7 +5,7 @@ const s3 = new S3({ useAccelerateEndpoint: true });
 
 const { BUCKET_NAME } = process.env;
 
-module.exports.handler = (event) => {
+module.exports.handler = async (event) => {
   const id = ulid.ulid();
   let key = `${event.identity.username}/${id}`;
   const extension = event.arguments.extension;
@@ -31,5 +31,9 @@ module.exports.handler = (event) => {
     ContentType: contentType,
   };
 
-  return s3.getSignedUrl('putObject', params);
+  const result = s3.getSignedUrl('putObject', params);
+
+  console.debug('result', result);
+
+  return result;
 };

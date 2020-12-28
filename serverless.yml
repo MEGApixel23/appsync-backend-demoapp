@@ -49,8 +49,8 @@ functions:
     iamRoleStatements:
       - Effect: Allow
         Action:
-          - S3:PutObject
-          - S3:PutObjectACL
+          - s3:PutObject
+          - s3:PutObjectAcl
         Resource: !Sub ${AssetsBucket.Arn}/*
 
 resources:

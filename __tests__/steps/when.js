@@ -145,6 +145,26 @@ const a_user_calls_editMyProfile = async (user, input) => {
   return profile;
 };
 
+const a_user_calls_getImageUploadUrl = async (user, extension, contentType) => {
+  const editMyProfileMutation = `
+    query getImageUploadUrl($extension: String!, $contentType: String!) {
+      getImageUploadUrl(extension: $extension, contentType: $contentType)
+    }
+  `;
+  const variables = { extension, contentType };
+  const data = await GraphQL.request(
+    process.env.API_URL,
+    editMyProfileMutation,
+    variables,
+    user.accessToken,
+  );
+  const url = data.getImageUploadUrl;
+
+  console.debug(`[${user.username}] - got image upload url`);
+
+  return url;
+};
+
 const we_invoke_getImageUploadUrl = async (
   username,
   extension,
@@ -172,4 +192,5 @@ module.exports = {
   a_user_calls_getMyProfile,
   a_user_calls_editMyProfile,
   we_invoke_getImageUploadUrl,
+  a_user_calls_getImageUploadUrl,
 };
