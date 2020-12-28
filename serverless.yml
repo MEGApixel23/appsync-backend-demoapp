@@ -117,16 +117,15 @@ resources:
       Properties:
         AccelerateConfiguration:
           AccelerationStatus: Enabled
-          CorsConfigurations:
-            CorsRules:
-              - AllowedMethods:
-                  - GET
-                  - PUT
-                AllowedOrigins:
-                  - '*'
-                AllowedHeaders:
-                  - '*'
-
+        CorsConfiguration:
+          CorsRules:
+            - AllowedMethods:
+                - GET
+                - PUT
+              AllowedOrigins:
+                - '*'
+              AllowedHeaders:
+                - '*'
 
   Outputs:
     AWSRegion:
